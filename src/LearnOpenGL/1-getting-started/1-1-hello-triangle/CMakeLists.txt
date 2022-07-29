@@ -1,4 +1,4 @@
-project(ppll_oit)
+project(1_1_hello_triangle)
 
 find_package(OpenSceneGraph REQUIRED osg osgViewer osgUtil osgDB)
 
@@ -7,7 +7,7 @@ include_directories(
 )
 
 set(PROJECT_SOURCE_FILE_LIST
-    main.cpp
+    hello_triangle.cpp
 )
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_FILE_LIST})
