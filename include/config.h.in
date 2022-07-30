@@ -1,1 +1,2 @@
 #define TEXTURE_PATH "@TEXTURE_PATH@"
+#define MESHES_PATH "@MESHES_PATH@"

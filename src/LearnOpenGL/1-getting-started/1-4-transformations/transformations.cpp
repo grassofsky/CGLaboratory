@@ -1,5 +1,9 @@
 /// see: https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/
-
+///
+/// 想要绘制的对象能够在窗口上进行旋转缩放，需要在shader中使用osg_ModelViewProjectionMatrix
+/// 同时    viewer.getCamera()->getGraphicsContext()->getState()->setUseModelViewAndProjectionUniforms(true);
+/// 设置启用osg_ModelViewProjectionMatrix
+///
 #include "config.h"
 
 #include <sstream>
@@ -10,6 +14,7 @@
 #include <osg/Group>
 #include <osg/Image>
 #include <osg/Texture2D>
+#include <osgGA/TrackballManipulator>
 #include <osgViewer/Viewer>
 
 
@@ -39,16 +44,20 @@
 //    // only eight texture coord examples provided here, but underlying code can handle any no of texture units,
 //    // simply co them as (TEXTURE_COORDS_0+unit).
 //};
-//
+// OSG 中内置的部分变量：
+// uniform mat4 osg_NormalMatrix: 法线变换矩阵
+// uniform mat4 osg_ModelViewMatrix: 
+// uniform mat4 osg_ModelViewProjectionMatrix
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec4 aPos;\n"
 "layout (location = 3) in vec4 aColor;\n"
 "layout (location = 8) in vec2 aTexCoord;\n"
+"uniform mat4 osg_ModelViewProjectionMatrix;\n"
 "out vec4 v2fColor;\n"
 "out vec2 v2fTexCoord;\n"
 "void main()\n"
 "{\n"
-"   gl_Position = aPos;\n"
+"   gl_Position = osg_ModelViewProjectionMatrix * aPos;\n"
 "   v2fColor = aColor;\n"
 "   v2fTexCoord = aTexCoord;\n"
 "}\0";
@@ -66,7 +75,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 int main()
 {
     osg::ref_ptr<osg::Vec3Array> vertices = new osg::Vec3Array(3);
-    (*vertices)[0].set(-0.5, -0.5, 0.0);
+    (*vertices)[0].set(-1.0, -1.0, 0.0);
     (*vertices)[1].set(0.5, -0.5, 0.0);
     (*vertices)[2].set(0.0, 0.5, 0.0);
 
@@ -129,5 +138,19 @@ int main()
     osgViewer::Viewer viewer;
     viewer.setSceneData(root);
     viewer.setUpViewInWindow(100, 100, 800, 600);
-    return viewer.run();
+    viewer.realize();
+
+    viewer.getCamera()->setClearColor(osg::Vec4(0.2, 0.2, 0.2, 0.2));
+    viewer.getCamera()->getGraphicsContext()->getState()->setUseModelViewAndProjectionUniforms(true);
+    viewer.getCamera()->setProjectionMatrixAsOrtho(-1, 1, -1, 1, 0.01, 2);
+    viewer.getCamera()->setViewMatrixAsLookAt(osg::Vec3d(0, 0, 1), osg::Vec3d(0, 0, 0), osg::Vec3d(0, 1, 0));
+
+    // 若果使用viewer.run()，重写相机参数信息
+    // 下面这种方式则无法控制窗口进行旋转平移
+    while (!viewer.done())
+    {
+        viewer.frame();
+    }
+
+    return 0;
 }

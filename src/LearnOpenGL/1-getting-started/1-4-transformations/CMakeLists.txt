@@ -1,4 +1,4 @@
-project(1-3-textures)
+project(1-4-transformations)
 
 find_package(OpenSceneGraph REQUIRED osg osgViewer osgUtil osgDB osgGA)
 
@@ -8,7 +8,7 @@ include_directories(
 )
 
 set(PROJECT_SOURCE_FILE_LIST
-    textures.cpp
+    transformations.cpp
 )
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_FILE_LIST})
