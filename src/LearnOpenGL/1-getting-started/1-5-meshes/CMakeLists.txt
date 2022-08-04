@@ -12,4 +12,5 @@ set(PROJECT_SOURCE_FILE_LIST
 )
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_FILE_LIST})
-target_link_libraries(${PROJECT_NAME} ${OPENSCENEGRAPH_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} 
+    ${OPENSCENEGRAPH_LIBRARIES})

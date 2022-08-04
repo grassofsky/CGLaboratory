@@ -47,6 +47,8 @@
 // OSG 中内置的部分变量：
 // uniform mat4 osg_NormalMatrix: 法线变换矩阵
 // uniform mat4 osg_ModelViewMatrix: 
+// uniform mat4 osg_ViewMatrix
+// uniform mat4 osg_ViewMatrixInverse
 // uniform mat4 osg_ModelViewProjectionMatrix
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec4 aPos;\n"
