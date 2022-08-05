@@ -5,12 +5,12 @@
 #include <OpenMesh/Core/IO/MeshIO.hh>
 #include <OpenMesh/Core/Mesh/TriMesh_ArrayKernelT.hh>
 
-#include <osg/Shape>
+#include <osg/Geometry>
 #include <osg/Array>
 
 typedef OpenMesh::TriMesh_ArrayKernelT<> TriMesh;
 
-bool loadTriangleMesh(const std::string& filename, osg::ref_ptr<osg::TriangleMesh>& osgTriMesh)
+bool loadTriangleMesh(const std::string& filename, osg::ref_ptr<osg::Geometry>& osgTriMesh)
 {
     TriMesh triMesh;
     if (!OpenMesh::IO::read_mesh(triMesh, filename))
@@ -32,18 +32,28 @@ bool loadTriangleMesh(const std::string& filename, osg::ref_ptr<osg::TriangleMes
         (*normals)[i].set(normal[0], normal[1], normal[2]);
     }
 
-    osg::ref_ptr<osg::UIntArray> indices = new osg::UIntArray(triMesh.n_faces() * 3);
+    osg::ref_ptr<osg::DrawElementsUInt> indices = new osg::DrawElementsUInt(GL_TRIANGLES, triMesh.n_faces() * 3);
     for (int i = 0; i < triMesh.n_faces(); ++i)
     {
         int j = 0;
-        for (auto iter = triMesh.fv_begin(triMesh.face_handle(i)); iter != triMesh.fv_end(); ++iter)
+        auto& fh = triMesh.face_handle(i);
+        for (auto iter = triMesh.fv_begin(fh); iter != triMesh.fv_end(fh); ++iter)
         {
             (*indices)[i * 3 + j] = iter->idx();
             j++;
         }
     }
 
-    osgTriMesh->setVertices(vertices.get());
-    osgTriMesh->setIndices(indices.get());
+    osgTriMesh->setDataVariance(osg::Object::DYNAMIC);
+    osgTriMesh->setUseDisplayList(false);
+    osgTriMesh->setUseVertexBufferObjects(true);
+    osgTriMesh->setUseVertexArrayObject(true);
+
+    osgTriMesh->setVertexArray(vertices.get());
+    osgTriMesh->setNormalArray(normals.get());
+    osgTriMesh->setNormalBinding(osg::Geometry::BIND_PER_VERTEX);
+    osgTriMesh->addPrimitiveSet(indices.get());
+
+    return true;
 }
 

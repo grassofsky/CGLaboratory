@@ -17,4 +17,5 @@ include_directories(
 )
 
 add_subdirectory(src/PPLL_OIT)
+add_subdirectory(src/meshdiff)
 add_subdirectory(src/LearnOpenGL)

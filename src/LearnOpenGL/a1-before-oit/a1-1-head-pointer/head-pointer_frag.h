@@ -1,4 +1,9 @@
-const char *fragmentShaderSource = R"(
+#include <string>
+
+#ifndef HEAD_POINTER_FRAG_H_
+#define HEAD_POINTER_FRAG_H_
+
+std::string fragmentShaderSource = R"(
 
 #version 420
 
@@ -12,6 +17,8 @@ void main()
     uint index = atomicCounterIncrement(Counter);
     uint oldHead = imageAtomicExchange(HeadPointerImage, ivec2(gl_FragCoord.xy), uint(index));
     
-    oFragColor = vec4(float(index)/50.0, float(index)/50.0, float(index)/50.0, 1.0);
+    oFragColor = vec4(float(index)/480000.0, float(index)/480000.0, float(index)/480000., 1.0);
 }
-")
+)";
+
+#endif

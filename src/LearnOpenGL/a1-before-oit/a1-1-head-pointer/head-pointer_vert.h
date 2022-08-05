@@ -1,4 +1,9 @@
-const char *vertexShaderSource = R"(
+#include <string>
+
+#ifndef HEAD_POINTER_VERT_H_
+#define HEAD_POINTER_VERT_H_
+
+std::string vertexShaderSource = R"(
 #version 420
 
 layout (location = 0) in vec3 vPos;
@@ -15,4 +20,6 @@ void main()
 {
     gl_Position = osg_ModelViewProjectionMatrix * vec4(vPos, 1.0);
 }
-)"
+)";
+
+#endif

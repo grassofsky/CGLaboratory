@@ -1,2 +1,2 @@
-#define TEXTURE_PATH "/home/zhongxiewei/workplace/git/cglaboratory/resources/textures/"
-#define MESHES_PATH "/home/zhongxiewei/workplace/git/cglaboratory/resources/meshes/"
+#define TEXTURE_PATH "E:/workplace/gitee/CGLaboratory/resources/textures/"
+#define MESHES_PATH "E:/workplace/gitee/CGLaboratory/resources/meshes/"
