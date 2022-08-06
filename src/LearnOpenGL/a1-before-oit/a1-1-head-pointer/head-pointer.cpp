@@ -8,7 +8,7 @@
 #include <osgViewer/Viewer>
 
 #include "config.h"
-#include "utils/openmesh_to_osg_mesh.h"
+#include "openmesh_ext/openmesh_to_osg_mesh.h"
 
 #include "head-pointer_vert.h"
 #include "head-pointer_frag.h"

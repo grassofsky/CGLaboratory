@@ -6,6 +6,7 @@ find_package(OpenMesh)
 include_directories(
     ${OPENSCENEGRAPH_INCLUDE_DIRS}
     ${OPENMESH_INCLUDE_DIRS}
+    ${EXTERNAL_INCLUDE}/GTE
 )
 
 set(PROJECT_SOURCE_FILE_LIST
