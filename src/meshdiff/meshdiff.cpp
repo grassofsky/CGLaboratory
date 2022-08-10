@@ -7,6 +7,7 @@
 #include "Mathematics/DistPointTriangle.h"
 
 #include "common/colormap_define.h"
+#include "common/osg_common.h"
 
 double GetPointToFaceDistance(TriMesh& trimesh1, TriMesh::VertexHandle vh, TriMesh& trimesh2, TriMesh::FaceHandle fh)
 {
@@ -28,12 +29,40 @@ double GetPointToFaceDistance(TriMesh& trimesh1, TriMesh::VertexHandle vh, TriMe
     return distanceQuery(point, triangle).distance;
 }
 
+osg::Camera* CreateHUDContent(double left, double right, double bottom, double top, double minV, double maxV)
+{
+    osg::ref_ptr<osg::Camera> hudcamera = CreateHUDCamera(left, right, bottom, top);
+
+    std::stringstream ss1;
+    ss1.precision(2);
+    ss1.setf(std::ios::fixed);
+    ss1 << "minValue " << minV;
+
+    std::string sMin = ss1.str();
+    ss1.clear();
+    ss1.str("");
+
+    ss1 << "maxValue " << maxV;
+    std::string sMax = ss1.str();
+
+    osg::ref_ptr<osgText::Text> text1 = CreateText(osg::Vec3(600, 50, 0), sMin, 20);
+    osg::ref_ptr<osgText::Text> text2 = CreateText(osg::Vec3(600, 550, 0), sMax, 20);
+
+    osg::ref_ptr<osg::Geode> geode = new osg::Geode;
+    geode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
+    geode->addDrawable(text1);
+    geode->addDrawable(text2);
+    geode->addDrawable(CreateColorMap(right - 50, right, bottom+5, top-5));
+    hudcamera->addChild(geode);
+    return hudcamera.release();
+}
+
 int main()
 {
     // load trimesh and calculate distance
     TriMesh trimeshbase, trimesh;
-    OpenMesh::IO::read_mesh(trimeshbase, "E:/STL/rabit.off");
-    OpenMesh::IO::read_mesh(trimesh, "E:/STL/rabit-out.stl");
+    OpenMesh::IO::read_mesh(trimeshbase, "E:/STL/test/liver.obj");
+    OpenMesh::IO::read_mesh(trimesh, "E:/STL/test/liver-out-0.5.stl");
 
     TriMesh::Point low, high;
     GetTriMeshBoundingBox(trimesh, low, high);
@@ -124,6 +153,8 @@ int main()
 
     trimesh.remove_property(vertexDistanceProperty);
     delete octree;
+
+    root->addChild(CreateHUDContent(0, 800, 0, 600, totalminDis, 0.5));
 
     // transform by camera
     osgViewer::Viewer viewer;

@@ -1,4 +1,4 @@
-#ifndef COLORMAP_DEINFE_H_
+#ifndef COLORMAP_DEFINE_H_
 #define COLORMAP_DEFINE_H_
 
 #include <vector>

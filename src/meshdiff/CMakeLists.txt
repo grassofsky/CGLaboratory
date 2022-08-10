@@ -1,6 +1,6 @@
 project(meshdiff)
 
-find_package(OpenSceneGraph REQUIRED osg osgViewer osgUtil osgDB)
+find_package(OpenSceneGraph REQUIRED osg osgViewer osgUtil osgDB osgText)
 find_package(OpenMesh)
 
 include_directories(
