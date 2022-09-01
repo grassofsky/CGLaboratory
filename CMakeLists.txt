@@ -11,13 +11,9 @@ configure_file(
 )
 
 set(EXTERNAL_INCLUDE ${CMAKE_SOURCE_DIR}/include/external/)
-
+set(CGlAB_INCLUDE ${CMAKE_SOURCE_DIR}/include)
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
+    ${CGlAB_INCLUDE}
 )
-
-add_subdirectory(src/PPLL_OIT)
-add_subdirectory(src/meshdiff)
-add_subdirectory(src/sdf_double_layer)
-add_subdirectory(src/asdf_fast)
 add_subdirectory(src/LearnOpenGL)
+add_subdirectory(src/apps)

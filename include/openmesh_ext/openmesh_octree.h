@@ -11,7 +11,7 @@
 #include "openmesh_utils.h"
 
 /**!
- * Octree data struct used for openmesh datastruct
+ * Octree data struct used for openmesh datastruct, the vertices of trimesh is stored in every oct-grid
  */
 class OpenMeshOctree {
     /*
@@ -154,7 +154,8 @@ public:
 
 private:
     // Determine which octant of the tree would contain 'point'
-    int GetOctantContainingPoint(const TriMesh::VertexHandle& vh) const {
+    int GetOctantContainingPoint(const TriMesh::VertexHandle& vh) const
+    {
         const TriMesh::Point& point = triMesh_.point(vh);
         int oct = 0;
         if (point[0] >= origin_[0]) oct |= 4;
