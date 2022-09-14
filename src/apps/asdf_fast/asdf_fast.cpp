@@ -8,6 +8,8 @@
 
 #include "config.h"
 
+/// Fast computing adaptively sampled distance field on GPU - 2011
+
 typedef std::pair<int, TriMesh::FaceHandle> TypeVoxelFacePair;
 struct TypeVoxelFacePairHashFunc
 {

@@ -4,6 +4,9 @@
 #include "openmesh_ext/openmesh_utils.h"
 #include "config.h"
 
+/*
+* Wu, Y., Man, J., & Xie, Z. (2014). A double layer method for constructing signed distance fields from triangle meshes. Graphical Models, 76(4), 214–223. https://doi.org/10.1016/j.gmod.2014.04.011
+*/
 const unsigned int knmax = 16;
 
 void SamplePoints(const TriMesh& trimesh, OpenMesh::FPropHandleT<double>& areaProperty, double epsilon, double pointOffsetSigma,
